@@ -4,7 +4,6 @@ import pandas as pd
 import requests
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 
 # Retrieve data from online API showing daily currency fx rates for USD
 request = requests.get("https://open.er-api.com/v6/latest/USD")
