@@ -85,8 +85,10 @@ cost_per_impression_male = total_male["cost_per_impression"] = (total_male["Spen
 cost_per_impression_female = total_female["cost_per_impression"] = (total_female["Spent"] / total_female["Impressions"])
 print(total_male)
 print(total_male.shape)
+print(total_male.describe())
 print(total_female)
 print(total_female.shape)
+print(total_male.describe())
 
 
 # Merge databases containing multi-index using suffixes to label as Male "_M" and Female "_F"
@@ -159,6 +161,7 @@ print(F_CID_936)
 F_CID_1178 = df2.iloc[8:12]
 print(F_CID_1178)
 
+
 fig, ax = plt.subplots()
 ax.plot(F_CID_916["age"], F_CID_916["%_Conversion"], color="m", linestyle="-.", marker="o", label="Campaign ID 916")
 ax.plot(F_CID_936["age"], F_CID_936["%_Conversion"], color="indigo", linestyle="--", marker="o", label="Campaign ID 936")
@@ -186,3 +189,5 @@ plt.show()
 
 # Campaign ID 1178 had a consistent % conversion rate across all age ranges for both males and females.
 # It experienced little fluctuation across the age ranges.
+
+
