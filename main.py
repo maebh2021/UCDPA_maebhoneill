@@ -88,6 +88,12 @@ print(total_male.shape)
 print(total_female)
 print(total_female.shape)
 
+
+# Merge databases containing multi-index using suffixes to label as Male "_M" and Female "_F"
+merged_data = total_male.merge(total_female, on=["xyz_campaign_id", "age"], suffixes=["_M", "_F"])
+print(merged_data)
+print(merged_data.columns.values)
+
 # Define a custom function to return how many days are in a particular month or if a year is a leap year.
 month_days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
@@ -113,12 +119,17 @@ print(is_leap(2017))
 # Check how many days were in February 2020
 print(days_in_month(2020, 2))
 
-# Merge databases containing multi-index using suffixes to label as Male "_M" and Female "_F"
-merged_data = total_male.merge(total_female, on=["xyz_campaign_id", "age"], suffixes=["_M", "_F"])
-print(merged_data)
-print(merged_data.columns.values)
+# Convert cost_per_conv_m and cost_per_conv_f in merged data to list using Series.tolist()
+Male_cost = merged_data["cost_per_conv_M"].tolist()
+Female_cost = merged_data["cost_per_conv_F"].tolist()
 
-# Subset total_male data set by ages and plot to create 3 smaller datasets to plot.
+# display average cost of conversion for males across all three campaigns
+print(np.mean(Male_cost))
+
+# display average cost of conversion for females across all three campaigns
+print(np.mean(Female_cost))
+
+# Subset total_male data set by ages and xyz_campaign_id to create 3 smaller datasets to plot.
 # Plot % Conversion of each campaign by age creating a separate line-graph for each gender
 
 df = total_male.reset_index()
@@ -139,7 +150,7 @@ ax.set_ylabel("% Conversion")
 ax.set_title("% Conversion rate in males by age and campaign")
 plt.show()
 
-# Subset Female data set by ages and plot.
+# Subset total_female data set by ages and xyz_campaign_id to create 3 smaller datasets to plot.
 df2 = total_female.reset_index()
 F_CID_916 = df2.iloc[0:4]
 print(F_CID_916)
@@ -157,3 +168,21 @@ ax.set_xlabel("Age range-Female")
 ax.set_ylabel("% Conversion")
 ax.set_title("% Conversion rate in females by age and campaign")
 plt.show()
+
+
+# Insights from the project
+
+# The average cost of conversion for males was lower than that for females(25.01 compared to 41.18)
+
+# Campaign ID 916 had the highest % conversion rate in the 40-44 age range for both male and female.
+
+# Campaign ID 916 had the lowest % conversion rate in the 45-49 age range for males.
+# However it remained consistently high in the 45-49 age group for females.
+# It was equal to the conversion rate in the 40-44 age group for females.
+
+# Campaign ID 936 had a sharp decrease in % conversion rate for males in the 35-39 age group.
+# Campaign ID 936 showed an increase in % conversion rate for females in the same age range.
+# However it also showed a huge decrease in % conversion rate for females in the 40-44 age range.
+
+# Campaign ID 1178 had a consistent % conversion rate across all age ranges for both males and females.
+# It experienced little fluctuation across the age ranges.
